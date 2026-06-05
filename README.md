@@ -119,36 +119,25 @@ git clone https://github.com/StateToolsLab/ai-deck-reconstructor.git
 cd ai-deck-reconstructor
 ```
 
-### 3. Create a virtual environment
+### 3. Set execute permission
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+chmod +x install.command
 ```
 
-### 4. Install dependencies
+### 4. Double-click install.command
 
-```bash
-pip install -r requirements.txt
-```
+The installer checks your environment, sets execute permissions, and creates a desktop shortcut.
 
-If NDLOCR-Lite is installed as a local editable package, install it in the same environment.
-
-```bash
-pip install -e ../ndlocr-lite
-```
+The launcher creates a local `.venv`, installs dependencies from `requirements.txt`, and starts the Flask app.
 
 ---
 
 ## Usage
 
-Start the local Flask app:
+Double-click `AI Deck Reconstructor.command` on the desktop.
 
-```bash
-flask --app ui.app run --host 127.0.0.1 --port 5050
-```
-
-Then open:
+The launcher opens:
 
 ```text
 http://127.0.0.1:5050
@@ -163,13 +152,15 @@ Typical workflow:
 5. Apply reconstruction rules
 6. Export an editable PowerPoint deck
 
+To stop the server, press `Ctrl+C` in the terminal window opened by the launcher.
+
 ---
 
 ## Data Storage
 
 AI Deck Reconstructor stores repository files and runtime working files inside the project directory.
 
-The repository initially contains `config/`, `docs/`, `json/`, `scripts/`, and `ui/`. Runtime folders such as `source/`, `assets/`, and `output/` are created or populated as you use the app.
+The repository initially contains `config/`, `docs/`, `json/`, `scripts`, and `ui/`. Runtime folders such as `source/`, `assets/`, and `output/` are created or populated as you use the app.
 
 ```text
 ai-deck-reconstructor/
@@ -202,6 +193,8 @@ It is intended for local experimentation with slide reconstruction workflows, es
 ## Changelog
 
 ### Public preparation branch
+- Add launcher files: `install.command`, `install.sh`, and `AI_Deck_Reconstructor.command`
+- Clarify repository name and runtime storage in README
 - Preserve source slide IDs in deck manifests
 - Add slide ordering controls
 - Stabilize asset ID and filename alignment
@@ -345,36 +338,25 @@ git clone https://github.com/StateToolsLab/ai-deck-reconstructor.git
 cd ai-deck-reconstructor
 ```
 
-### 3. 仮想環境を作成
+### 3. インストールスクリプトに実行権限を付与
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+chmod +x install.command
 ```
 
-### 4. 依存ライブラリをインストール
+### 4. install.command をダブルクリック
 
-```bash
-pip install -r requirements.txt
-```
+インストーラーが環境を確認し、実行権限の設定とデスクトップショートカットの作成を行います。
 
-NDLOCR-Liteをローカルのeditable packageとして使う場合は、同じ仮想環境にインストールします。
-
-```bash
-pip install -e ../ndlocr-lite
-```
+起動時には、ローカルの `.venv` を作成し、`requirements.txt` から依存ライブラリをインストールして、Flaskアプリを起動します。
 
 ---
 
 ## 起動方法
 
-ローカルFlaskアプリを起動します。
+デスクトップの `AI Deck Reconstructor.command` をダブルクリックします。
 
-```bash
-flask --app ui.app run --host 127.0.0.1 --port 5050
-```
-
-ブラウザで以下を開きます。
+起動後、ブラウザで以下が開きます。
 
 ```text
 http://127.0.0.1:5050
@@ -388,6 +370,8 @@ http://127.0.0.1:5050
 4. 素材候補を採用・調整する
 5. 再構成ルールを反映する
 6. 編集可能なPowerPointとして出力する
+
+サーバーを停止するには、起動時に開いたターミナルウィンドウで `Ctrl+C` を押します。
 
 ---
 
@@ -428,6 +412,8 @@ README画像や設定ファイルなど、リポジトリ管理対象のファ�
 ## 更新履歴
 
 ### Public preparation branch
+- `install.command`、`install.sh`、`AI_Deck_Reconstructor.command` の起動ファイルを追加
+- README内のリポジトリ名と実行時データ保存場所の説明を整理
 - deck manifestでsource slide IDを保持
 - スライド順序変更UIを追加
 - asset ID とファイル名の整合性を安定化
