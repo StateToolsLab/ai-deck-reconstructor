@@ -143,6 +143,9 @@ The launcher opens:
 http://127.0.0.1:5050
 ```
 
+Recommended browser zoom: 100%.
+If the layout looks collapsed or broken, reset browser zoom to 100%.
+
 Typical workflow:
 
 1. Open or add slide images / PDF files
@@ -361,6 +364,9 @@ chmod +x install.command
 ```text
 http://127.0.0.1:5050
 ```
+
+推奨ブラウザ表示倍率：100%。
+ペインやボタンが折りたたまれて見える場合は、ブラウザの表示倍率を100%に戻してください。
 
 基本的な流れ：
 
