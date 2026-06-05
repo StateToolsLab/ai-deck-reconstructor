@@ -1,0 +1,167 @@
+﻿{
+  "version": "0.2",
+  "description": "OCR Deck Composer reconstruction presets, scope presets, and role-based placement rules",
+
+  "mode_presets": {
+    "debug": {
+      "label": "Debug",
+      "min_confidence": 0.0,
+      "exclude_logo": false,
+      "exclude_footer": false,
+      "exclude_decoration": false,
+      "mark_source": true
+    },
+
+    "draft": {
+      "label": "Draft",
+      "min_confidence": 0.2,
+      "exclude_logo": false,
+      "exclude_footer": false,
+      "exclude_decoration": false,
+      "mark_source": false
+    },
+
+    "working": {
+      "label": "Working",
+      "min_confidence": 0.35,
+      "exclude_logo": true,
+      "exclude_footer": true,
+      "exclude_decoration": true,
+      "mark_source": false
+    },
+
+    "clean": {
+      "label": "Clean",
+      "min_confidence": 0.55,
+      "exclude_logo": true,
+      "exclude_footer": true,
+      "exclude_decoration": true,
+      "mark_source": false
+    },
+
+    "final": {
+      "label": "Final",
+      "min_confidence": 0.65,
+      "exclude_logo": true,
+      "exclude_footer": true,
+      "exclude_decoration": true,
+      "mark_source": false
+    }
+  },
+
+  "scope_presets": {
+    "standard": {
+      "label": "Standard",
+      "include_logo": false,
+      "include_footer": false,
+      "include_decoration": false,
+      "include_page_number": false,
+      "include_copyright": false,
+      "include_diagram_label": false,
+      "include_asset_internal_text": false
+    },
+
+    "full": {
+      "label": "Full",
+      "include_logo": true,
+      "include_footer": true,
+      "include_decoration": true,
+      "include_page_number": true,
+      "include_copyright": true,
+      "include_diagram_label": true,
+      "include_asset_internal_text": true
+    }
+  },
+
+  "role_rules": {
+    "h1": {
+      "style_ref": "h1",
+      "font_size": 26,
+      "x_pad": 0.08,
+      "y_pad": 0.04,
+      "w_pad": 0.35,
+      "min_h": 0.62,
+      "h_scale": 1.05
+    },
+
+    "h2": {
+      "style_ref": "h2",
+      "font_size": 17,
+      "x_pad": 0.06,
+      "y_pad": 0.03,
+      "w_pad": 0.30,
+      "min_h": 0.55,
+      "h_scale": 1.10
+    },
+
+    "p": {
+      "style_ref": "p",
+      "font_size": 10.5,
+      "x_pad": 0.04,
+      "y_pad": 0.02,
+      "w_pad": 0.22,
+      "min_h": 0.38,
+      "h_scale": 1.35
+    },
+
+    "footer.note": {
+      "style_ref": "footer.note",
+      "font_size": 7.5,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.10,
+      "min_h": 0.22,
+      "h_scale": 1.10
+    },
+
+    "logo_text": {
+      "style_ref": "p",
+      "font_size": 7.5,
+      "x_pad": 0.01,
+      "y_pad": 0.01,
+      "w_pad": 0.08,
+      "min_h": 0.20,
+      "h_scale": 1.00
+    },
+
+    "page_number": {
+      "style_ref": "footer.note",
+      "font_size": 7.0,
+      "x_pad": 0.01,
+      "y_pad": 0.01,
+      "w_pad": 0.08,
+      "min_h": 0.18,
+      "h_scale": 1.00
+    },
+
+    "copyright": {
+      "style_ref": "footer.note",
+      "font_size": 6.5,
+      "x_pad": 0.01,
+      "y_pad": 0.01,
+      "w_pad": 0.12,
+      "min_h": 0.22,
+      "h_scale": 1.10
+    },
+
+    "diagram_label": {
+      "style_ref": "p",
+      "font_size": 8.5,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.12,
+      "min_h": 0.28,
+      "h_scale": 1.15
+    },
+
+    "asset_internal_text": {
+      "style_ref": "p",
+      "font_size": 8.0,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.12,
+      "min_h": 0.28,
+      "h_scale": 1.15
+    }
+  }
+}

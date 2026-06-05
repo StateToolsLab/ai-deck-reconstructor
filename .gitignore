@@ -1,0 +1,52 @@
+﻿# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local/private input
+source/
+source_raw/
+assets/
+
+# Generated outputs
+output/
+temp/
+*.pptx
+
+# Generated OCR / intermediate files
+json/ocr/
+json/ocr_deep_full/
+json/ocr_rois/
+json/text_blocks/
+json/text_blocks_working/
+json/text_blocks_deep_full/
+json/slides/
+json/ocr_engine_configs/
+json/deep_full/
+source_deep_full/
+source_ocr_rois/
+
+# Generated runners
+scripts/_run_ocr_ndlocr_*.py
+scripts/_normalize_ndlocr_to_text_blocks_*.py
+scripts/_generated_ocr_runners/
+
+# Backups / patches
+*.bak*
+*.backup*
+archive_backup/
+archive_patch/
+experimental_roi/
+
+# OS
+.DS_Store
+Thumbs.db
+json/deck_manifest.json
+
+workspaces/
+.current_workspace
+
+.workspace_folders.json
+backups/
+json/slide_order.json

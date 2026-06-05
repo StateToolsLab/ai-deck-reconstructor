@@ -1,0 +1,196 @@
+{
+  "version": "0.2",
+  "description": "OCR Deck Composer reconstruction presets, scope presets, and role-based placement rules",
+  "mode_presets": {
+    "debug": {
+      "label": "Debug",
+      "min_confidence": 0.0,
+      "exclude_logo": false,
+      "exclude_footer": false,
+      "exclude_decoration": false,
+      "mark_source": true
+    },
+    "draft": {
+      "label": "Draft",
+      "min_confidence": 0.2,
+      "exclude_logo": false,
+      "exclude_footer": false,
+      "exclude_decoration": false,
+      "mark_source": false
+    },
+    "working": {
+      "label": "Working",
+      "min_confidence": 0.35,
+      "exclude_logo": true,
+      "exclude_footer": true,
+      "exclude_decoration": true,
+      "mark_source": false
+    },
+    "clean": {
+      "label": "Clean",
+      "min_confidence": 0.55,
+      "exclude_logo": true,
+      "exclude_footer": true,
+      "exclude_decoration": true,
+      "mark_source": false
+    },
+    "final": {
+      "label": "Final",
+      "min_confidence": 0.65,
+      "exclude_logo": true,
+      "exclude_footer": true,
+      "exclude_decoration": true,
+      "mark_source": false
+    }
+  },
+  "scope_presets": {
+    "standard": {
+      "label": "Standard",
+      "include_logo": false,
+      "include_footer": false,
+      "include_decoration": false,
+      "include_page_number": false,
+      "include_copyright": false,
+      "include_diagram_label": false,
+      "include_asset_internal_text": false
+    },
+    "full": {
+      "label": "Full",
+      "include_logo": true,
+      "include_footer": true,
+      "include_decoration": true,
+      "include_page_number": true,
+      "include_copyright": true,
+      "include_diagram_label": true,
+      "include_asset_internal_text": true
+    }
+  },
+  "role_rules": {
+    "h1": {
+      "style_ref": "left.h1",
+      "font_size": 44,
+      "x_pad": 0.08,
+      "y_pad": 0.04,
+      "w_pad": 0.35,
+      "min_h": 0.62,
+      "h_scale": 1.05
+    },
+    "h2": {
+      "style_ref": "left.h2",
+      "font_size": 28,
+      "x_pad": 0.06,
+      "y_pad": 0.03,
+      "w_pad": 0.3,
+      "min_h": 0.55,
+      "h_scale": 1.1
+    },
+    "p": {
+      "style_ref": "left.p",
+      "font_size": 14,
+      "x_pad": 0.04,
+      "y_pad": 0.02,
+      "w_pad": 0.22,
+      "min_h": 0.38,
+      "h_scale": 1.35
+    },
+    "footer.note": {
+      "style_ref": "footer.note",
+      "font_size": 7.5,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.1,
+      "min_h": 0.22,
+      "h_scale": 1.1
+    },
+    "logo_text": {
+      "style_ref": "left.p",
+      "font_size": 7.5,
+      "x_pad": 0.01,
+      "y_pad": 0.01,
+      "w_pad": 0.08,
+      "min_h": 0.2,
+      "h_scale": 1.0
+    },
+    "page_number": {
+      "style_ref": "footer.note",
+      "font_size": 7.0,
+      "x_pad": 0.01,
+      "y_pad": 0.01,
+      "w_pad": 0.08,
+      "min_h": 0.18,
+      "h_scale": 1.0
+    },
+    "copyright": {
+      "style_ref": "footer.note",
+      "font_size": 6.5,
+      "x_pad": 0.01,
+      "y_pad": 0.01,
+      "w_pad": 0.12,
+      "min_h": 0.22,
+      "h_scale": 1.1
+    },
+    "diagram_label": {
+      "style_ref": "left.p",
+      "font_size": 8.5,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.12,
+      "min_h": 0.28,
+      "h_scale": 1.15
+    },
+    "asset_internal_text": {
+      "style_ref": "left.p",
+      "font_size": 8.0,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.12,
+      "min_h": 0.28,
+      "h_scale": 1.15
+    },
+    "header.meta": {
+      "style_ref": "meta.small",
+      "font_size": 9,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.12,
+      "min_h": 0.22,
+      "h_scale": 1.1
+    },
+    "card.meta": {
+      "style_ref": "card.meta",
+      "font_size": 8,
+      "x_pad": 0.01,
+      "y_pad": 0.005,
+      "w_pad": 0.08,
+      "min_h": 0.16,
+      "h_scale": 1.05
+    },
+    "card.title": {
+      "style_ref": "card.title",
+      "font_size": 16,
+      "x_pad": 0.03,
+      "y_pad": 0.015,
+      "w_pad": 0.18,
+      "min_h": 0.32,
+      "h_scale": 1.1
+    },
+    "card.body": {
+      "style_ref": "card.body",
+      "font_size": 12,
+      "x_pad": 0.025,
+      "y_pad": 0.012,
+      "w_pad": 0.16,
+      "min_h": 0.28,
+      "h_scale": 1.15
+    },
+    "card.note": {
+      "style_ref": "card.note",
+      "font_size": 10,
+      "x_pad": 0.02,
+      "y_pad": 0.01,
+      "w_pad": 0.14,
+      "min_h": 0.24,
+      "h_scale": 1.15
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "theme": {
+    "styles": {
+      "left.h1": {
+        "font_family": "Meiryo",
+        "font_size": 32,
+        "bold": true,
+        "color": "0B3B8C",
+        "align": "left",
+        "italic": false
+      },
+      "left.h2": {
+        "font_family": "Meiryo",
+        "font_size": 24,
+        "bold": true,
+        "color": "0B3B8C",
+        "align": "left",
+        "italic": false
+      },
+      "left.p": {
+        "font_family": "Meiryo",
+        "font_size": 14,
+        "bold": false,
+        "color": "0B3B8C",
+        "align": "left",
+        "italic": false
+      },
+      "footer.note": {
+        "font_family": "Yu Gothic",
+        "font_size": 9,
+        "bold": false,
+        "color": "999999",
+        "align": "left"
+      },
+      "meta.small": {
+        "font_family": "Yu Gothic",
+        "font_size": 9,
+        "bold": false,
+        "color": "999999",
+        "align": "left"
+      },
+      "card.meta": {
+        "font_family": "Yu Gothic",
+        "font_size": 8,
+        "bold": false,
+        "color": "8A90A8",
+        "align": "left"
+      },
+      "card.title": {
+        "font_family": "Yu Gothic",
+        "font_size": 16,
+        "bold": true,
+        "color": "333333",
+        "align": "left"
+      },
+      "card.body": {
+        "font_family": "Yu Gothic",
+        "font_size": 12,
+        "bold": false,
+        "color": "333333",
+        "align": "left"
+      },
+      "card.note": {
+        "font_family": "Yu Gothic",
+        "font_size": 10,
+        "bold": false,
+        "color": "666666",
+        "align": "left"
+      },
+      "card.meta.on_light": {
+        "font_family": "Yu Gothic",
+        "font_size": 8,
+        "bold": false,
+        "color": "8A90A8",
+        "align": "left"
+      },
+      "card.title.on_light": {
+        "font_family": "Yu Gothic",
+        "font_size": 16,
+        "bold": true,
+        "color": "333333",
+        "align": "left"
+      },
+      "card.body.on_light": {
+        "font_family": "Yu Gothic",
+        "font_size": 12,
+        "bold": false,
+        "color": "333333",
+        "align": "left"
+      },
+      "card.note.on_light": {
+        "font_family": "Yu Gothic",
+        "font_size": 10,
+        "bold": false,
+        "color": "666666",
+        "align": "left"
+      },
+      "card.meta.on_dark": {
+        "font_family": "Yu Gothic",
+        "font_size": 8,
+        "bold": false,
+        "color": "E6E8F0",
+        "align": "left"
+      },
+      "card.title.on_dark": {
+        "font_family": "Yu Gothic",
+        "font_size": 16,
+        "bold": true,
+        "color": "FFFFFF",
+        "align": "left"
+      },
+      "card.body.on_dark": {
+        "font_family": "Yu Gothic",
+        "font_size": 12,
+        "bold": false,
+        "color": "F2F4FA",
+        "align": "left"
+      },
+      "card.note.on_dark": {
+        "font_family": "Yu Gothic",
+        "font_size": 10,
+        "bold": false,
+        "color": "DDE1EC",
+        "align": "left"
+      },
+      "center.h1": {
+        "font_family": "ヒラギノ明朝 ProN",
+        "font_size": 32,
+        "bold": true,
+        "color": "FACC15",
+        "align": "left",
+        "italic": false
+      },
+      "center.h2": {
+        "font_family": "Meiryo",
+        "font_size": 24,
+        "bold": true,
+        "color": "0B3B8C",
+        "align": "center",
+        "italic": false
+      },
+      "center.p": {
+        "font_family": "Meiryo",
+        "font_size": 14,
+        "bold": false,
+        "color": "0B3B8C",
+        "align": "center",
+        "italic": false
+      }
+    },
+    "tokens": {
+      "Main": "0B3B8C",
+      "Sub": "64748B",
+      "Accent": "C03030",
+      "Background.Light": "F8FAFC",
+      "Background.Dark": "111827",
+      "Surface.Light": "FFFFFF",
+      "Surface.Dark": "1F2937",
+      "Text.OnLight": "111827",
+      "Text.OnDark": "F9FAFB",
+      "MutedText.OnLight": "6B7280",
+      "MutedText.OnDark": "CBD5E1",
+      "Border.OnLight": "D1D5DB",
+      "Border.OnDark": "334155",
+      "Highlight": "FACC15",
+      "Warning": "F97316",
+      "Success": "22C55E",
+      "Danger": "EF4444"
+    },
+    "tokens_meta": {
+      "updated_at": "2026-05-08T04:23:10",
+      "source": "design_system_panel",
+      "sampled_slide_id": "",
+      "sampled_source": ""
+    },
+    "sampled_colors": {
+      "colors": [],
+      "updated_at": "2026-05-08T04:23:10",
+      "slide_id": "",
+      "source": ""
+    }
+  }
+}

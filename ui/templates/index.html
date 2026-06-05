@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="app.documentTitle">AI Deck Reconstructor Console</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="titlebar">
+      <div class="brand">
+        <span class="brand-main">AI Deck Reconstructor</span>
+        <span class="brand-sub" data-i18n="app.subtitle">One-shot Deck Converter</span>
+      </div>
+      <div class="workspace-pill" id="workspacePath">workspace loading...</div>
+      <div class="title-actions icon-actions">
+        <div class="header-action-group workspace-control-group">
+          <button id="registerWorkspaceBtn" class="header-icon-btn workspace-register-btn" onclick="registerCurrentWorkspaceFolder()" title="Register current workspace">☆</button>
+          <button class="header-text-btn header-label-btn" onclick="openFolderModal()" title="Open registered workspace" data-i18n="workspace.open" data-i18n-title="workspace.openTitle">Open</button>
+          <button class="header-text-btn header-label-btn" onclick="refreshAll()" title="Refresh" data-i18n="common.reload" data-i18n-title="common.reloadTitle">Reload</button>
+        </div>
+
+        <div class="header-action-group app-control-group">
+          <button id="langToggleBtn" class="header-text-btn" onclick="toggleLanguage()" title="Switch language">EN</button>
+          <button id="themeToggleBtn" class="header-icon-btn" onclick="toggleTheme()" title="Switch theme">☀</button>
+        </div>
+      </div>
+    </header>
+
+    <aside class="pane pane-left">
+      <div class="pane-header">
+        <div>
+          <div class="pane-kicker" data-i18n="pane.input">Input</div>
+          <div class="pane-title" data-i18n="pane.slides">Slides</div>
+        </div>
+      </div>
+
+      <section class="upload-card workspace-actions compact">
+        <div class="action-head">
+          <div>
+            <div class="action-title" data-i18n="workspace.actions">Workspace Actions</div>
+            <div class="action-sub" data-i18n="workspace.limitNote">OSS版 Console：最大20枚</div>
+          </div>
+        </div>
+
+        <div class="workspace-button-grid">
+          <button class="btn action-btn" onclick="openFiles()">
+            <span class="btn-main" data-i18n="source.openFiles">Open Files</span>
+            <span class="btn-sub" data-i18n="source.openFilesSub">ファイル選択</span>
+          </button>
+
+          <button class="btn action-btn" onclick="addFiles()">
+            <span class="btn-main" data-i18n="source.addFiles">Add Files</span>
+            <span class="btn-sub" data-i18n="source.addFilesSub">ファイル追加</span>
+          </button>
+        </div>
+
+        <input id="fileInput" type="file" accept="image/*,.pdf,application/pdf" multiple hidden>
+        <input type="checkbox" id="resetBeforeUpload" checked hidden>
+      </section>
+
+      <div class="list-header source-list-header">
+        <span data-i18n="source.current">Current source</span>
+        <button class="source-clear-btn" onclick="clearSourceFiles()" title="Clear current source" data-i18n="common.clear" data-i18n-title="source.clearTitle">Clear</button>
+      </div>
+      <div id="slideList" class="slide-list"></div>
+
+    </aside>
+
+    <main class="pane pane-center">
+      <div class="pane-header center-header">
+        <div>
+          <div class="pane-kicker" data-i18n="pane.preview">Preview</div>
+          <div class="pane-title" id="selectedTitle">No slide selected</div>
+        </div>
+
+        <div class="preview-tabs">
+          <button id="tabOriginal" class="tab-btn active" onclick="setPreviewMode('original')" data-i18n="preview.original">元画像</button>
+          <button id="tabReconstructed" class="tab-btn" onclick="setPreviewMode('reconstructed')" data-i18n="preview.reconstructed">再構成後</button>
+        </div>
+
+        <div class="deck-action-row">
+          <button class="btn small" onclick="processSelectedSlide()" data-i18n="preview.processSelected">このスライドを処理</button>
+          <button class="btn small" onclick="processPendingSlides()" data-i18n="preview.processPending">未処理を処理</button>
+          <button id="reconstructBtn" class="btn small ghost" onclick="reconstruct()" title="全スライドをOCRから再処理します" data-i18n="preview.reprocessAll" data-i18n-title="preview.reprocessAllTitle">全スライド再処理</button>
+          <button class="btn small primary export-action" onclick="exportPptx()" data-i18n="pptx.export">PPTXを書き出す</button>
+        </div>
+      </div>
+
+
+            <div class="center-preview-controls preview-layer-controls">
+        <div class="note-title" data-i18n="preview.controls">Preview Controls</div>
+
+        <div class="preview-layer-row">
+          <label class="check-row right-check">
+            <input type="checkbox" id="showBg" checked onchange="toggleBackground()">
+            <span data-i18n="preview.background">背景画像</span>
+          </label>
+
+          <div class="range-row compact-range">
+            <span data-i18n="preview.opacity">opacity</span>
+            <input id="bgOpacity" type="range" min="0" max="100" value="78" oninput="setBackgroundOpacity(this.value)">
+            <strong id="bgOpacityValue">78%</strong>
+          </div>
+
+          <label class="check-row right-check">
+            <input type="checkbox" id="showTextBlocks" checked onchange="toggleTextBlocksLayer()">
+            <span data-i18n="preview.textBlocks">Text Blocks</span>
+          </label>
+
+          <label class="check-row right-check">
+            <input type="checkbox" id="showRebuildElements" onchange="toggleRebuildElementsLayer()">
+            <span data-i18n="preview.rebuildElements">Rebuild Elements</span>
+          </label>
+        </div>
+      </div>
+
+      <div id="aidrClipAssistControls" class="aidr-clip-assist-controls" style="display:none;">
+        <div class="aidr-clip-assist-head">
+          <div class="aidr-clip-assist-title" data-i18n="clip.assist">Clip Assist</div>
+          <button type="button" class="aidr-clip-assist-close" onclick="exitBBoxEditMode()" title="Exit bbox edit">×</button>
+        </div>
+
+        <label class="check-row right-check">
+          <input id="aidrClipGridToggle" type="checkbox" checked onchange="setClipGridEnabled(this.checked)">
+          <span data-i18n="clip.grid">Grid</span>
+        </label>
+
+        <label class="aidr-clip-grid-pitch">
+          <span data-i18n="clip.pitch">pitch</span>
+          <input id="aidrClipGridPitch" type="number" min="1" max="240" step="1" value="32" onchange="setClipGridPitch(this.value)">
+          <span>px</span>
+        </label>
+
+        <label class="check-row right-check">
+          <input id="clipSnapToggle" type="checkbox" checked onchange="setClipSnapEnabled(this.checked)">
+          <span data-i18n="clip.snap">Snap</span>
+        </label>
+
+        <span id="aidrClipImageSizeInfo" class="aidr-clip-assist-info">Source: -</span>
+
+        <div class="aidr-clip-grid-origin">
+          <span data-i18n="clip.origin">origin</span>
+          <label><input type="radio" name="aidrClipGridOrigin" value="top_left" checked onchange="setClipGridOrigin(this.value)"><span data-i18n="clip.originTopLeft">左上</span></label>
+          <label><input type="radio" name="aidrClipGridOrigin" value="center" onchange="setClipGridOrigin(this.value)"><span data-i18n="clip.originCenter">中央</span></label>
+          <label><input type="radio" name="aidrClipGridOrigin" value="top_center" onchange="setClipGridOrigin(this.value)"><span data-i18n="clip.originTopCenter">上辺中央</span></label>
+        </div>
+      </div>
+
+<div class="preview-wrap">
+        <div id="emptyPreview" class="empty-state">
+          <div class="empty-icon">▧</div>
+          <div data-i18n="preview.empty">AI生成スライド画像を投入すると、ここにプレビューが表示されます。</div>
+        </div>
+
+        <div id="previewStage" class="preview-stage">
+          <img id="slidePreview" class="slide-preview" alt="slide preview">
+          <div id="reconstructOverlay" class="reconstruct-overlay"></div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="pane pane-right" id="aidrRightPane">
+      <button
+        id="aidrRightPaneExpandTab"
+        class="aidr-right-pane-expand-tab"
+        type="button"
+        onclick="expandRightPane()"
+        title="Show right pane"
+        data-i18n-title="rightPane.expand"
+        data-i18n-aria-label="rightPane.expand"
+        hidden
+      >
+        <span class="aidr-right-pane-expand-icon">‹</span>
+        <span class="aidr-right-pane-expand-label" data-i18n="pane.inspect">Inspect</span>
+      </button>
+
+      <div class="pane-header aidr-right-pane-header">
+        <div>
+          <div class="pane-kicker" data-i18n="pane.inspect">Inspect</div>
+          <div class="pane-title" data-i18n="pane.rebuildState">Rebuild State</div>
+        </div>
+        <button
+          id="aidrRightPaneCollapseBtn"
+          class="aidr-right-pane-collapse-btn"
+          type="button"
+          onclick="collapseRightPane()"
+          title="Hide right pane"
+          data-i18n-title="rightPane.collapse"
+          data-i18n-aria-label="rightPane.collapse"
+        >›</button>
+      </div>
+
+      <section id="aidrAssistMenuCard" class="status-card aidr-assist-menu-card">
+        <button class="aidr-assist-collapse-head" type="button" onclick="toggleAssistCard()">
+          <div class="note-title" data-i18n="assist.menu">Assist Menu</div>
+          <span id="aidrAssistToggleIcon">▾</span>
+        </button>
+
+        <div id="aidrAssistCompactBody" class="aidr-assist-compact-body">
+          <div class="aidr-assist-menu-grid">
+            <button class="aidr-assist-menu-btn" onclick="setAssistMode('theme')" data-i18n="assist.theme">Theme</button>
+            <button class="aidr-assist-menu-btn" onclick="setAssistMode('style')" data-i18n="assist.textSettings">Text Settings</button>
+            <button class="aidr-assist-menu-btn" onclick="setAssistMode('asset')" data-i18n="assist.assetEdit">Asset Edit</button>
+          </div>
+
+          <div id="aidrAssistModeStatus" class="aidr-assist-mode-status aidr-assist-mode-status-hidden"></div>
+        </div>
+      </section>
+
+      <section id="rebuildCompactCard" class="status-card rebuild-compact-card">
+        <button class="rebuild-collapse-head" type="button" onclick="toggleRebuildCard()">
+          <div>
+            <div class="note-title" data-i18n="rebuild.title">Rebuild</div>
+            <div class="tiny-note">
+              <span id="manifestStatus">-</span>
+              <span class="dot-separator">・</span>
+              <span id="slideCount">0</span> slides
+            </div>
+          </div>
+          <span id="rebuildToggleIcon">▾</span>
+        </button>
+
+        <div id="rebuildCompactBody" class="rebuild-compact-body">
+          <div class="rebuild-compact-actions">
+            <button class="btn primary compact-action" onclick="openLatestPptx()" data-i18n="pptx.open">Open PPTX</button>
+            <button class="btn compact-action" onclick="openOutputFolder()" data-i18n="folder.openShort">Folder</button>
+          </div>
+
+          <div class="tiny-note latest-pptx-note">
+            latest: <span id="latestPptx">-</span>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="status-card">
+
+        <div class="note-title" data-i18n="selected.title">Selected Item</div>
+        <div id="selectedElement" class="selected-empty">
+          プレビュー上のText BlockまたはRebuild Elementをクリックすると、ここに情報が表示されます。
+        </div>
+      </section>
+
+            <section class="status-card assets-card">
+        <div class="note-title" data-i18n="assets.title">Assets</div>
+
+        <div class="aidr-right-action-panel aidr-asset-operation-panel">
+          <label class="right-check">
+            <input id="assetOverlayToggle" type="checkbox" checked onchange="renderAssetOverlays()">
+            <span data-i18n="asset.overlay">Asset Overlay</span>
+          </label>
+
+          <label class="right-check">
+            <input id="assetClipModeToggle" type="checkbox" onchange="setAssetClipMode(this.checked)">
+            <span data-i18n="asset.clipMode">Asset Clip Mode</span>
+          </label>
+
+          <div class="aidr-asset-clip-actions">
+            <button class="btn small" onclick="confirmAssetClip()" data-i18n="asset.confirmClip">Confirm Clip</button>
+            <button class="btn small ghost" onclick="cancelAssetClip()" data-i18n="common.cancel">Cancel</button>
+          </div>
+
+          <div id="assetClipStatus" class="tiny-note" data-i18n="asset.clipOff">Asset Clip Mode is OFF.</div>
+        </div>
+
+        <div id="aidrRightAssetsList" class="aidr-right-assets-list"><div class="aidr-asset-empty" data-i18n="assets.empty">No assets yet.</div></div>
+
+        <div class="note-subtitle" data-i18n="candidates.title">Candidates</div>
+
+        <div class="aidr-right-action-panel aidr-candidate-operation-panel">
+          <label class="right-check">
+            <input id="assetCandidatesToggle" type="checkbox" checked onchange="renderCandidateOverlays()">
+            <span data-i18n="candidate.overlay">Candidate Overlay</span>
+          </label>
+
+          <div class="aidr-asset-candidate-actions">
+            <button class="btn small" onclick="detectAssetCandidates()" data-i18n="asset.detectCandidates">Detect Candidates</button>
+            <button class="btn small" onclick="acceptSelectedCandidate()" data-i18n="candidate.acceptSelected">Accept + PPTX</button>
+            <button class="btn small" onclick="acceptAllCandidates()" data-i18n="candidate.acceptAll">Accept All + PPTX</button>
+          </div>
+
+          <div id="assetCandidateStatus" class="tiny-note" data-i18n="candidate.statusNotLoaded">Asset Candidates: not loaded.</div>
+        </div>
+
+        <div id="aidrRightCandidatesList" class="aidr-right-candidates-list"><div class="aidr-asset-empty" data-i18n="candidates.empty">No candidates yet.</div></div>
+      </section>
+
+
+    </aside>
+
+    <footer class="console" id="aidrBottomPane" data-aidr-bottom-mode="log">
+      <div
+        id="aidrBottomPaneResizeHandle"
+        class="aidr-bottom-pane-resize-handle"
+        onpointerdown="startBottomPaneResize(event)"
+        ondblclick="resetBottomPaneHeight()"
+      ></div>
+      <div class="console-header">
+        <div class="aidr-bottom-pane-left">
+          <button id="logToggle" class="log-toggle" onclick="toggleRunLog()">▼</button>
+          <div class="aidr-bottom-pane-tabs">
+            <button id="aidrBottomLogTab" class="aidr-bottom-pane-tab is-active" onclick="setBottomPaneMode('log')" data-i18n="bottom.log">RUN LOG</button>
+            <button id="aidrBottomPreviewTab" class="aidr-bottom-pane-tab" onclick="setBottomPaneMode('preview')" data-i18n="bottom.preview">PREVIEW</button>
+          </div>
+        </div>
+        <div class="aidr-bottom-pane-actions">
+          <div id="aidrBottomLogActions" class="aidr-bottom-pane-action-group">
+            <button class="btn ghost tiny" onclick="copyLog()" data-i18n="common.copy">Copy</button>
+            <button class="btn ghost tiny" onclick="clearLog()" data-i18n="common.clear">Clear</button>
+          </div>
+          <div id="aidrBottomPreviewActions" class="aidr-bottom-pane-action-group aidr-bottom-preview-actions">
+            <button class="btn ghost tiny" onclick="adjustBottomPreviewZoom(-0.1)">−</button>
+            <button class="btn ghost tiny" onclick="resetBottomPreviewZoom()" id="aidrBottomPreviewZoomLabel">100%</button>
+            <button class="btn ghost tiny" onclick="adjustBottomPreviewZoom(0.1)">＋</button>
+          </div>
+        </div>
+      </div>
+      <pre id="runLog"></pre>
+      <div id="aidrBottomPreview" class="aidr-bottom-preview-pane"></div>
+    </footer>
+  </div>
+
+
+  <div id="uploadModal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-card upload-action-modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-kicker" data-i18n="modal.workspace">WORKSPACE</div>
+          <div id="uploadModalTitle" class="modal-title" data-i18n="modal.openFiles">Open Files</div>
+        </div>
+        <button class="modal-close" onclick="closeUploadModal()">×</button>
+      </div>
+
+      <div id="uploadModalDescription" class="modal-description compact">
+        新規ワークスペースとして開きます。
+      </div>
+
+      <button id="modalDropZone" class="modal-drop-zone" onclick="chooseUploadFiles()">
+        <span class="modal-drop-icon">＋</span>
+        <span class="modal-drop-main" data-i18n="upload.dropMain">ここにドロップ、またはクリックして選択</span>
+        <span class="modal-drop-sub" data-i18n="upload.dropSub">PNG / JPG / JPEG / WEBP / BMP / TIFF / PDF</span>
+      </button>
+
+      <div class="modal-action-list">
+        <button class="modal-action-btn" onclick="readClipboardImage()">
+          <span class="modal-action-icon">📋</span>
+          <span data-i18n="upload.clipboard">クリップボード画像を追加</span>
+          <small>⌘V / Ctrl+V</small>
+        </button>
+
+        <button class="modal-action-btn" onclick="chooseImageFiles()">
+          <span class="modal-action-icon">🖼️</span>
+          <span data-i18n="upload.addImage">画像を追加</span>
+        </button>
+
+        <button class="modal-action-btn" onclick="choosePdfFiles()">
+          <span class="modal-action-icon">📄</span>
+          <span data-i18n="upload.addPdf">PDFを追加</span>
+        </button>
+      </div>
+
+      <div id="uploadModeNote" class="modal-note compact">
+        現在の source/ を置き換えて slide_001 から採番します。
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <div id="folderModal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-card folder-modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-kicker" data-i18n="modal.workspace">WORKSPACE</div>
+          <div class="modal-title" data-i18n="modal.openFolder">Open Folder</div>
+        </div>
+        <button class="modal-close" onclick="closeFolderModal()">×</button>
+      </div>
+
+      <div class="modal-description compact" data-i18n="workspace.folderDescription">
+        Workspaceフォルダを登録して、次回から一覧で開けるようにします。
+      </div>
+
+      <div class="folder-register-row direct-register">
+        <input id="workspaceFolderPath" class="folder-path-input" type="text" placeholder="/path/to/workspace">
+        <button class="btn primary folder-add-btn" onclick="registerWorkspaceFolder()" title="Register workspace">＋</button>
+      </div>
+
+      <div class="folder-section-title" data-i18n="workspace.registered">Registered Workspaces</div>
+      <div id="registeredWorkspaceList" class="registered-workspace-list">
+        <div class="registered-empty" data-i18n="workspace.empty">登録済みWorkspaceはありません。</div>
+      </div>
+
+      <div class="modal-note compact" data-i18n="workspace.unregisterNote">
+        ★を外すと登録一覧から解除します。実フォルダは削除されません。
+      </div>
+    </div>
+  </div>
+
+
+  <script src="/static/app.js"></script>
+  <div id="themeSettingsModal" class="settings-modal-backdrop" style="display:none;">
+    <div class="settings-modal-card">
+      <div class="settings-modal-header">
+        <div>
+          <div class="pane-kicker" data-i18n="settings.title">Settings</div>
+          <div class="pane-title" data-i18n="settings.assistMenu">Assist Menu</div>
+        </div>
+        <button class="header-icon-btn" onclick="closeThemeSettings()" title="Close">×</button>
+      </div>
+
+      <div class="settings-modal-body">
+        <div class="tiny-note" data-i18n="settings.themeStyleNote">Theme / Style Settings を切り替えて編集します。Theme は全体適用、Style Settings はText要素の編集です。</div>
+        <div id="themeStyleList" class="text-style-list text-style-list-modal">
+          <div class="selected-empty" data-i18n="settings.loadingTextStyles">Loading text styles...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

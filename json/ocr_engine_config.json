@@ -1,0 +1,9 @@
+{
+  "ocr_engine": {
+    "name": "ndlocr-lite",
+    "mode": "external",
+    "engine_path": "../ndlocr-lite",
+    "raw_output_dir": "json/ocr",
+    "normalized_output_dir": "json/text_blocks"
+  }
+}

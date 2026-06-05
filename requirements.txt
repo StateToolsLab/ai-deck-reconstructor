@@ -1,0 +1,7 @@
+﻿python-pptx
+Pillow
+lxml
+reportlab
+Flask
+
+pdf2image

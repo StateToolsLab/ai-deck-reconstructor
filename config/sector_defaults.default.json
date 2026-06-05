@@ -1,0 +1,34 @@
+﻿{
+  "theme": {
+    "styles": {
+      "left.h1": {
+        "font_family": "Yu Gothic",
+        "font_size": 34,
+        "bold": true,
+        "color": "0B3B8C",
+        "align": "left"
+      },
+      "left.h2": {
+        "font_family": "Yu Gothic",
+        "font_size": 28,
+        "bold": true,
+        "color": "0B3B8C",
+        "align": "left"
+      },
+      "left.p": {
+        "font_family": "Yu Gothic",
+        "font_size": 14,
+        "bold": false,
+        "color": "333333",
+        "align": "left"
+      },
+      "footer.note": {
+        "font_family": "Yu Gothic",
+        "font_size": 9,
+        "bold": false,
+        "color": "999999",
+        "align": "left"
+      }
+    }
+  }
+}
