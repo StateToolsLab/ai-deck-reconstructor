@@ -115,8 +115,8 @@ parent-folder/
 ### 2. Clone AI Deck Reconstructor
 
 ```bash
-git clone https://github.com/StateToolsLab/AI-Deck-Reconstructor.git
-cd AI-Deck-Reconstructor
+git clone https://github.com/StateToolsLab/ai-deck-reconstructor.git
+cd ai-deck-reconstructor
 ```
 
 ### 3. Create a virtual environment
@@ -167,10 +167,12 @@ Typical workflow:
 
 ## Data Storage
 
-AI Deck Reconstructor stores working files inside the project directory.
+AI Deck Reconstructor stores repository files and runtime working files inside the project directory.
+
+The repository initially contains `config/`, `docs/`, `json/`, `scripts/`, and `ui/`. Runtime folders such as `source/`, `assets/`, and `output/` are created or populated as you use the app.
 
 ```text
-AI-Deck-Reconstructor/
+ai-deck-reconstructor/
 ├── source/                  # Uploaded source slide images
 ├── assets/
 │   └── slide_xxx/            # Extracted image assets
@@ -339,8 +341,8 @@ parent-folder/
 ### 2. AI Deck Reconstructorをクローン
 
 ```bash
-git clone https://github.com/StateToolsLab/AI-Deck-Reconstructor.git
-cd AI-Deck-Reconstructor
+git clone https://github.com/StateToolsLab/ai-deck-reconstructor.git
+cd ai-deck-reconstructor
 ```
 
 ### 3. 仮想環境を作成
@@ -391,10 +393,12 @@ http://127.0.0.1:5050
 
 ## データ保存場所
 
-AI Deck Reconstructor は、作業ファイルをプロジェクトディレクトリ内に保存します。
+AI Deck Reconstructor は、リポジトリファイルと実行時の作業ファイルをプロジェクトディレクトリ内に保存します。
+
+初期状態のリポジトリには `config/`、`docs/`、`json/`、`scripts/`、`ui/` などが含まれます。`source/`、`assets/`、`output/` などは、アプリの利用に応じて作成または更新されます。
 
 ```text
-AI-Deck-Reconstructor/
+ai-deck-reconstructor/
 ├── source/                  # アップロードされた元スライド画像
 ├── assets/
 │   └── slide_xxx/            # 抽出された画像素材
