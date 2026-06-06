@@ -15,6 +15,14 @@ Instead, it takes slide images or PDF pages, runs OCR, extracts editable text bl
 
 ---
 
+## App Icon
+
+The OSS app icon is available at `assets/icon_adr_oss.png`.
+
+You may use it for repository pages, website listings, README previews, and local shortcuts related to AI Deck Reconstructor.
+
+---
+
 ## Concept
 
 Most AI slide generators can create impressive slide images, but fine-tuning those results is often difficult.
@@ -233,6 +241,14 @@ AI Deck Reconstructor は、スライドをゼロから生成するツールで�
 画像として出力されたスライドを読み込み、OCR・テキストブロック化・素材抽出・再構成指定を通じて、人間が編集できるPowerPointへ戻すことを目的としています。
 
 **UIは日本語・英語に対応しています（画面右上で切り替え）。**
+
+---
+
+## アプリアイコン
+
+OSS版のアプリアイコンは `assets/icon_adr_oss.png` に配置しています。
+
+AI Deck Reconstructor に関連するリポジトリページ、Webサイト掲載、READMEプレビュー、ローカルショートカット等で利用できます。
 
 ---
 
