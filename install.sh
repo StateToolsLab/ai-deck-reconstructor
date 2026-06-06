@@ -5,6 +5,7 @@ set -e
 APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 LAUNCHER="$APP_DIR/AI_Deck_Reconstructor.command"
 DESKTOP_LINK="$HOME/Desktop/AI Deck Reconstructor.command"
+DESKTOP_ALIAS="$HOME/Desktop/AI Deck Reconstructor"
 
 echo ""
 echo "AI Deck Reconstructor — Installer"
@@ -54,7 +55,24 @@ else
 fi
 
 chmod +x "$LAUNCHER"
-ln -sf "$LAUNCHER" "$DESKTOP_LINK"
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  rm -f "$DESKTOP_LINK"
+  rm -f "$DESKTOP_ALIAS"
+
+  osascript <<APPLESCRIPT
+tell application "Finder"
+  set targetFile to POSIX file "$LAUNCHER" as alias
+  set desktopFolder to POSIX file "$HOME/Desktop" as alias
+  make new alias file at desktopFolder to targetFile with properties {name:"AI Deck Reconstructor"}
+end tell
+APPLESCRIPT
+
+  DESKTOP_SHORTCUT="$DESKTOP_ALIAS"
+else
+  ln -sf "$LAUNCHER" "$DESKTOP_LINK"
+  DESKTOP_SHORTCUT="$DESKTOP_LINK"
+fi
 
 echo ""
 echo "=================================="
@@ -62,7 +80,7 @@ echo "✅ Installation complete"
 echo "=================================="
 echo ""
 echo "Desktop shortcut created:"
-echo "$DESKTOP_LINK"
+echo "$DESKTOP_SHORTCUT"
 echo ""
 echo "NDLOCR-Lite is required for OCR."
 echo "Recommended local layout:"
@@ -74,6 +92,6 @@ echo ""
 echo "If NDLOCR-Lite is placed at ../ndlocr-lite, the launcher will try to install it into the virtual environment automatically."
 echo ""
 echo "You can now double-click:"
-echo "AI Deck Reconstructor.command"
+echo "$(basename "$DESKTOP_SHORTCUT")"
 echo ""
 read -p "Press Enter to close..."
