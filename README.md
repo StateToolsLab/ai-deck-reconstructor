@@ -17,7 +17,7 @@ Instead, it takes slide images or PDF pages, runs OCR, extracts editable text bl
 
 ## App Icon
 
-The OSS app icon is available at `assets/icon_adr_oss.png`.
+The OSS app icon is available at `docs/images/icon_adr_oss.png`.
 
 You may use it for repository pages, website listings, README previews, and local shortcuts related to AI Deck Reconstructor.
 
@@ -246,7 +246,7 @@ AI Deck Reconstructor は、スライドをゼロから生成するツールで�
 
 ## アプリアイコン
 
-OSS版のアプリアイコンは `assets/icon_adr_oss.png` に配置しています。
+OSS版のアプリアイコンは `docs/images/icon_adr_oss.png` に配置しています。
 
 AI Deck Reconstructor に関連するリポジトリページ、Webサイト掲載、READMEプレビュー、ローカルショートカット等で利用できます。
 
