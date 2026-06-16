@@ -1,7 +1,9 @@
-﻿from pathlib import Path
+from pathlib import Path
 import json
 import subprocess
 import shutil
+import sys
+import os
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 
@@ -24,10 +26,25 @@ def main():
 
     cli_path = shutil.which(engine_name)
     if cli_path is None:
+        candidate_paths = [
+            Path(sys.executable).parent / engine_name,
+            Path(sys.prefix) / "bin" / engine_name,
+        ]
+
+        virtual_env = os.environ.get("VIRTUAL_ENV")
+        if virtual_env:
+            candidate_paths.append(Path(virtual_env) / "bin" / engine_name)
+
+        for candidate_path in candidate_paths:
+            if candidate_path.exists():
+                cli_path = str(candidate_path)
+                break
+
+    if cli_path is None:
         raise RuntimeError(f"OCR CLI not found: {engine_name}")
 
     cmd = [
-        engine_name,
+        cli_path,
         "--sourceimg", str(source_img),
         "--output", str(output_dir),
         "--device", "cpu"

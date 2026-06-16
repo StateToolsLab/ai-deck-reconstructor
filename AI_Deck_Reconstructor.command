@@ -15,6 +15,7 @@ PYTHON="$VENV/bin/python"
 PIP="$VENV/bin/pip"
 PORT="5050"
 URL="http://127.0.0.1:$PORT"
+export PATH="$VENV/bin:$PATH"
 
 echo ""
 echo "AI Deck Reconstructor"
