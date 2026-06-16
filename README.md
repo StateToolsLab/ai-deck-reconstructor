@@ -106,18 +106,21 @@ The goal is reconstruction into a deck that can be edited, corrected, and reused
 Install [NDLOCR-Lite](https://github.com/ndl-lab/ndlocr-lite) separately.
 
 This project expects NDLOCR-Lite to be available from the local environment.
-In the current default setup, the OCR engine path is configured in:
 
-```text
-json/ocr_engine_config.json
-```
-
-A common local layout is:
+Recommended local layout:
 
 ```text
 parent-folder/
 ├── ai-deck-reconstructor/
 └── ndlocr-lite/
+```
+
+When `../ndlocr-lite` exists, `AI_Deck_Reconstructor.command` creates a local `.venv` and installs NDLOCR-Lite in editable mode.
+
+The OCR engine name and default configuration are defined in:
+
+```text
+json/ocr_engine_config.json
 ```
 
 ### 2. Clone AI Deck Reconstructor
@@ -137,7 +140,7 @@ chmod +x install.command
 
 The installer checks your environment, sets execute permissions, and creates a desktop shortcut.
 
-The launcher creates a local `.venv`, installs dependencies from `requirements.txt`, and starts the Flask app.
+The launcher creates a local `.venv`, installs dependencies from `requirements.txt`, installs `../ndlocr-lite` when available, and starts the Flask app.
 
 ---
 
@@ -171,7 +174,7 @@ To stop the server, press `Ctrl+C` in the terminal window opened by the launcher
 
 AI Deck Reconstructor stores repository files and runtime working files inside the project directory.
 
-The repository initially contains `config/`, `docs/`, `json/`, `scripts`, and `ui/`. Runtime folders such as `source/`, `assets/`, and `output/` are created or populated as you use the app.
+The repository initially contains `config/`, `docs/`, `json/`, `scripts`, and `ui/`. Runtime folders such as `source/`, `assets/`, `json/slides/`, `json/ocr/`, `json/text_blocks/`, `json/text_blocks_working/`, `output/`, and `temp/` are created or populated as you use the app.
 
 ```text
 ai-deck-reconstructor/
@@ -185,11 +188,14 @@ ai-deck-reconstructor/
 │   ├── text_blocks_working/  # Editable working text blocks
 │   └── themes/               # User theme configuration
 ├── output/                   # Generated files
+├── temp/                     # Temporary workspace files
 └── docs/images/              # README images
 ```
 
 Generated source files and assets can be cleared from the UI.
 Repository files such as README images and configuration files are not removed by source clearing.
+
+Runtime-generated workspace files are not intended to be committed as source files.
 
 ---
 
@@ -202,6 +208,12 @@ It is intended for local experimentation with slide reconstruction workflows, es
 ---
 
 ## Changelog
+
+### v0.1.1
+- Fix OCR CLI lookup when running from the launcher-created virtual environment
+- Add `.venv/bin` to the launcher `PATH`
+- Create missing parent directories before writing rebuild specs
+- Improve clean public workspace setup behavior
 
 ### Public preparation branch
 - Add launcher files: `install.command`, `install.sh`, and `AI_Deck_Reconstructor.command`
@@ -336,18 +348,21 @@ AI Deck Reconstructor が扱うのは、その次の工程です。
 [NDLOCR-Lite](https://github.com/ndl-lab/ndlocr-lite) を別途インストールします。
 
 このプロジェクトでは、ローカル環境からNDLOCR-Liteを呼び出せることを前提にしています。
-現在のデフォルト構成では、OCRエンジンのパスは以下で管理します。
 
-```text
-json/ocr_engine_config.json
-```
-
-一般的なローカル配置例：
+推奨するローカル配置例：
 
 ```text
 parent-folder/
 ├── ai-deck-reconstructor/
 └── ndlocr-lite/
+```
+
+`../ndlocr-lite` が存在する場合、`AI_Deck_Reconstructor.command` はローカル `.venv` を作成し、NDLOCR-Liteをeditable modeでインストールします。
+
+OCRエンジン名とデフォルト設定は以下で管理します。
+
+```text
+json/ocr_engine_config.json
 ```
 
 ### 2. AI Deck Reconstructorをクローン
@@ -367,7 +382,7 @@ chmod +x install.command
 
 インストーラーが環境を確認し、実行権限の設定とデスクトップショートカットの作成を行います。
 
-起動時には、ローカルの `.venv` を作成し、`requirements.txt` から依存ライブラリをインストールして、Flaskアプリを起動します。
+起動時には、ローカルの `.venv` を作成し、`requirements.txt` から依存ライブラリをインストールします。`../ndlocr-lite` が存在する場合はNDLOCR-Liteもインストールし、Flaskアプリを起動します。
 
 ---
 
@@ -401,7 +416,7 @@ http://127.0.0.1:5050
 
 AI Deck Reconstructor は、リポジトリファイルと実行時の作業ファイルをプロジェクトディレクトリ内に保存します。
 
-初期状態のリポジトリには `config/`、`docs/`、`json/`、`scripts/`、`ui/` などが含まれます。`source/`、`assets/`、`output/` などは、アプリの利用に応じて作成または更新されます。
+初期状態のリポジトリには `config/`、`docs/`、`json/`、`scripts/`、`ui/` などが含まれます。`source/`、`assets/`、`json/slides/`、`json/ocr/`、`json/text_blocks/`、`json/text_blocks_working/`、`output/`、`temp/` などは、アプリの利用に応じて作成または更新されます。
 
 ```text
 ai-deck-reconstructor/
@@ -415,11 +430,14 @@ ai-deck-reconstructor/
 │   ├── text_blocks_working/  # 編集用テキストブロック
 │   └── themes/               # ユーザーテーマ設定
 ├── output/                   # 生成ファイル
+├── temp/                     # 一時作業ファイル
 └── docs/images/              # README用画像
 ```
 
 UIからsourceと生成物をクリアできます。
 README画像や設定ファイルなど、リポジトリ管理対象のファイルはsourceクリアでは削除されません。
+
+実行時に生成される作業ファイルは、ソースファイルとしてコミットする想定ではありません。
 
 ---
 
@@ -432,6 +450,12 @@ README画像や設定ファイルなど、リポジトリ管理対象のファ�
 ---
 
 ## 更新履歴
+
+### v0.1.1
+- ランチャーで作成された仮想環境からOCR CLIを検出できるよう修正
+- ランチャーの `PATH` に `.venv/bin` を追加
+- rebuild_spec 書き込み前に不足している親ディレクトリを作成
+- クリーンな公開ワークスペースでの初回セットアップ挙動を改善
 
 ### Public preparation branch
 - `install.command`、`install.sh`、`AI_Deck_Reconstructor.command` の起動ファイルを追加
